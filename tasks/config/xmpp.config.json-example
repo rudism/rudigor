@@ -6,7 +6,9 @@
     },
     {
       "jid": "your.name@chat.facebook.com",
-      "password": "your-facebook-password"
+      "password": "your-facebook-password",
+      "host": "chat.facebook.com"
+
     }
   ]
 }
