@@ -1,0 +1,17 @@
+{
+    "name": "RudIgor",
+    "description": "Rudi's Igor",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "coffee-script": "~1.7.1",
+        "express": "~3.5.0",
+        "jade": "~1.3.0",
+        "stylus": "~0.42.3",
+        "redis": "~0.10.1",
+        "xml2js": "~0.4.1",
+        "require-dir": "~0.1.0",
+        "node-xmpp-client": "~1.0.0",
+        "request": "~2.34.0"
+    }
+}
