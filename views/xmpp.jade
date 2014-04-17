@@ -1,0 +1,6 @@
+extend layout
+block content
+    dl
+        each status in statuses
+            dt #{status.jid}
+            dd #{status.status}

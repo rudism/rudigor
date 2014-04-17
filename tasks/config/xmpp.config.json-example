@@ -1,4 +1,6 @@
 {
+    "authUser": "admin",
+    "authPassword": "password",
     "clients": {
         "you@gmail.com": {
             "password": "your-gmail-password",

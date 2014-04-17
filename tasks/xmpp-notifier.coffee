@@ -2,8 +2,11 @@ xmpp = require 'node-xmpp-client'
 config = require "./config/xmpp.config.json"
 ltx = require 'ltx'
 redis = require 'redis'
+express = require 'express'
+Promise = require('es6-promise').Promise
 
 rclient = redis.createClient()
+auth = express.basicAuth config.authUser, config.authPassword
 
 connectClient = (jid, clientcfg) ->
     xmppconfig =
@@ -36,6 +39,27 @@ for jid, clientcfg of config.clients
     console.log "INFO #{jid}: Connecting"
     connectClient jid, clientcfg
 
+getFromRedis = (key) ->
+    new Promise (resolve, reject) ->
+        rclient.get key, (err, reply) ->
+            if err?
+                reject err
+            else
+                resolve
+                    key: key
+                    value: reply
+
 module.exports = (app) ->
-    app.get "/xmpp", (req, res) ->
-        res.send "nothing yet"
+    app.get "/xmpp", auth, (req, res) ->
+        promises = []
+        for jid, clientcfg of config.clients
+            promises.push getFromRedis "xmpp-status-#{jid}"
+        Promise.all(promises).then (replies) ->
+            statuses = []
+            for reply in replies
+                statuses.push
+                    jid: reply.key
+                    status: reply.value
+            res.render 'xmpp',
+                title: 'XMPP Task'
+                statuses: statuses
