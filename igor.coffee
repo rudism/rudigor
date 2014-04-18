@@ -28,6 +28,11 @@ app.configure ->
     app.use express.errorHandler({showStack: true, showMessage: true, dumpExceptions: true})
 
 require("./tasks/ifttt.coffee")(app)
+require("./tasks/xmpp-notifier.coffee")(app)
+
+app.get '/', (req, res) ->
+    res.render 'index',
+        title: 'RudiGor'
 
 app.listen app.get("port"), ->
     console.log "RudIgor listening on port " + app.get("port")
