@@ -64,12 +64,15 @@ connectClient = (jid, clientcfg) ->
                 name = item.attrs.name.replace '"', "'"
                 rclient.set "xmpp-roster-#{jid}", name
         else if stanza.is('message') and stanza.type == 'chat'
-            from = stanza.attrs.from.substring 0, stanza.attrs.from.indexOf '/'
+            from = stanza.attrs.from
+            if from.indexOf('/') >= 0
+                from = from.substring 0, from.indexOf '/'
             message = stanza.getChildText 'body'
-            getFromRedis("xmpp-roster-#{from}").then (fromname) ->
-                processMessage (if fromname.value? then fromname.value else from), message
-            , () ->
-                processMessage from, message
+            if from? and message?
+                getFromRedis("xmpp-roster-#{from}").then (fromname) ->
+                    processMessage (if fromname.value? then fromname.value else from), message
+                , () ->
+                    processMessage from, message
 
 for jid, clientcfg of config.clients
     rclient.set "xmpp-status-#{jid}", "Connecting"
