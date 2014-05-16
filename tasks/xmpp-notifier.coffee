@@ -7,9 +7,12 @@ ltx = require 'ltx'
 redis = require 'redis'
 express = require 'express'
 Promise = require('es6-promise').Promise
+basicAuth = require 'http-auth'
 
 rclient = redis.createClient()
-auth = express.basicAuth config.authUser, config.authPassword
+auth = basicAuth.basic {realm: 'Private'}, (u, p, callback) ->
+    callback (u == config.authUser and p == config.authPassword)
+
 
 getFromRedis = (key) ->
     new Promise (resolve, reject) ->
@@ -80,7 +83,7 @@ for jid, clientcfg of config.clients
     connectClient jid, clientcfg
 
 module.exports = (app) ->
-    app.get "/xmpp", auth, (req, res) ->
+    app.get "/xmpp", basicAuth.connect(auth), (req, res) ->
         promises = []
         for jid, clientcfg of config.clients
             promises.push getFromRedis "xmpp-status-#{jid}"

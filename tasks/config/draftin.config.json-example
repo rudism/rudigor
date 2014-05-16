@@ -1,0 +1,11 @@
+{
+    "hexo":"/usr/local/bin/hexo",
+    "s3cmd":"/usr/bin/s3cmd",
+    "blogs": {
+        "some-secret-site-token": {
+            "hexo_dir":"/path/to/your/hexo/site/folder",
+            "s3_bucket":"www.myhexoblog.com",
+            "publish_url":"http://www.myhexoblog.com/{name}"
+        }
+    }
+}
