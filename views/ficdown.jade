@@ -1,0 +1,25 @@
+doctype html
+html(lang="en")
+  head
+    title Ficdown Tester
+    meta(charset="utf-8")
+    meta(name="HandheldFriendly" content="True")
+    meta(name="MobileOptimized" content="320")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(href="http://fonts.googleapis.com/css?family=Maven+Pro:400,700" rel="stylesheet")
+    link(rel="stylesheet" href="/styles/ficdown.css")
+  body
+    #container.container
+      #main
+    textarea#story
+      #{story}
+    script(src="http://code.jquery.com/jquery-2.1.1.min.js")
+    script(src="http://cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Converter.min.js")
+    script(src="http://cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Sanitizer.min.js)
+    script(src="/scripts/ficdown.min.js")
+    script.
+      $(document).ready(function(){
+        story = parseText($('#story').val());
+        player = new Player(story, 'main');
+        player.play();
+      });

@@ -34,7 +34,6 @@ app.use serveStatic path.join __dirname, "public"
 app.use errorHandler({showStack: true, showMessage: true, dumpExceptions: true})
 
 require("./tasks/ifttt.coffee")(app)
-require("./tasks/xmpp-notifier.coffee")(app)
 require("./tasks/draftin.coffee")(app)
 
 app.get '/', (req, res) ->
